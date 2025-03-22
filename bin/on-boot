@@ -1,0 +1,34 @@
+#!/bin/sh
+BIN_DIR="$(dirname "$0")"
+PAK_DIR="$(dirname "$BIN_DIR")"
+PAK_NAME="$(basename "$PAK_DIR")"
+PAK_NAME="${PAK_NAME%.*}"
+[ -f "$USERDATA_PATH/$PAK_NAME/debug" ] && set -x
+
+rm -f "$LOGS_PATH/$PAK_NAME.on-boot.txt"
+exec >>"$LOGS_PATH/$PAK_NAME.on-boot.txt"
+exec 2>&1
+
+echo "$0" "$@"
+cd "$PAK_DIR" || exit 1
+
+disable_start_on_boot() {
+    sed -i "/${PAK_NAME}.pak-on-boot/d" "$SDCARD_PATH/.userdata/$PLATFORM/auto.sh"
+    sync
+    return 0
+}
+
+main() {
+    if [ "$PLATFORM" = "tg3040" ] && [ -z "$DEVICE" ]; then
+        export DEVICE="brick"
+        export PLATFORM="tg5040"
+    fi
+
+    r2_value="$(coreutils timeout .1s evtest /dev/input/event3 2>/dev/null | awk '/ABS_RZ/{getline; print}' | awk '{print $2}' || true)"
+    if [ "$r2_value" = "255" ]; then
+        rm -f "$SHARED_USERDATA_PATH/enable-simple-mode"
+        disable_start_on_boot
+    fi
+}
+
+main "$@"

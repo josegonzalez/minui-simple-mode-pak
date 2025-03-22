@@ -1,0 +1,9 @@
+{
+    "label": "Enable Simple Mode",
+    "launch": "launch.sh",
+    "description": "Enables MinUI Simple Mode",
+    "platforms": [
+        "rg35xxplus",
+        "tg5040"
+    ]
+}
