@@ -24,8 +24,11 @@ Use the correct platform for your device.
 
 ## Usage
 
-Browse to `Tools > Simple Mode` and press `A` to enter the app. You can enable simple mode by confirming in the app.
+Browse to `Tools > Simple Mode` and press `A` to enter the app. You can enable simple mode by confirming in the app. You can also "force enable" the functionality by pressing the X button.
 
 ### Disabling Simple Mode
+
+> [!IMPORTANT]
+> If the feature was force enabled, it will need to be disabled by mounting your SD card onto a separate computer or using some remote access feature to manually remove the `/.userdata/shared/enable-simple-mode` file on the SD card.
 
 While the device is booting, press and hold the `R2` button until you see a message on the screen. The functionality will be disabled and MinUI will boot into normal mode.

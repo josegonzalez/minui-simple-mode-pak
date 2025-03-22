@@ -10,6 +10,7 @@ exec 2>&1
 
 echo "$0" "$@"
 cd "$PAK_DIR" || exit 1
+mkdir -p "$USERDATA_PATH/$PAK_NAME"
 
 export PATH="$PAK_DIR/bin/$PLATFORM:$PATH"
 
@@ -70,9 +71,27 @@ main() {
     chmod +x "$PAK_DIR/bin/$PLATFORM/minui-presenter"
 
     killall minui-presenter >/dev/null 2>&1 || true
-    minui-presenter --message "Once enabled Simple Mode can only"$'\n'"be disabled by using another device"$'\n'"to delete a file from this SD card."$'\n\n'"Please see the README included"$'\n'"in this pak for details."$'\n\n' --timeout 0
+
+    message="Once enabled Simple Mode can only"$'\n'"be disabled by using another device"$'\n'"to delete a file from this SD card."$'\n\n'"Please see the README included"$'\n'"in this pak for details."$'\n\n'
+
+    minui-presenter \
+        --action-button X \
+        --action-show \
+        --action-text "FORCE" \
+        --cancel-show \
+        --confirm-show \
+        --confirm-text "CONFIRM" \
+        --message "$message" \
+        --timeout 0
     exit_code=$?
-    if [ "$exit_code" -ne 0 ]; then
+    if [ "$exit_code" -eq 4 ]; then
+        minui-presenter --message "Forcing Simple Mode will disable the ability to hold R2 on boot to avoid Simple Mode. Are you sure you want to continue?" --timeout 0
+        exit_code=$?
+        if [ "$exit_code" -ne 0 ]; then
+            return 1
+        fi
+        touch "$USERDATA_PATH/$PAK_NAME/force-simple-mode"
+    elif [ "$exit_code" -ne 0 ]; then
         return 1
     fi
 

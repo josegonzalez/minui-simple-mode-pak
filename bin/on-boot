@@ -24,6 +24,10 @@ main() {
         export PLATFORM="tg5040"
     fi
 
+    if [ -f "$SHARED_USERDATA_PATH/force-simple-mode" ]; then
+        return 0
+    fi
+
     r2_value="$(coreutils timeout .1s evtest /dev/input/event3 2>/dev/null | awk '/ABS_RZ/{getline; print}' | awk '{print $2}' || true)"
     if [ "$r2_value" = "255" ]; then
         rm -f "$SHARED_USERDATA_PATH/enable-simple-mode"
