@@ -1,7 +1,7 @@
 {
-    "label": "Enable Simple Mode",
+    "label": "Simple Mode",
     "launch": "launch.sh",
-    "description": "Enables MinUI Simple Mode",
+    "description": "Manages MinUI's Simple Mode",
     "platforms": [
         "rg35xxplus",
         "tg5040"
