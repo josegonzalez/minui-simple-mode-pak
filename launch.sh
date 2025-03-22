@@ -79,13 +79,21 @@ main() {
         --action-show \
         --action-text "FORCE" \
         --cancel-show \
+        --cancel-text "EXIT" \
         --confirm-show \
         --confirm-text "CONFIRM" \
         --message "$message" \
         --timeout 0
     exit_code=$?
     if [ "$exit_code" -eq 4 ]; then
-        minui-presenter --message "Forcing Simple Mode will disable the ability to hold R2 on boot to avoid Simple Mode. Are you sure you want to continue?" --timeout 0
+        message="Forcing Simple Mode will disable the ability to hold R2 on boot to avoid Simple Mode. Are you sure you want to continue?"
+        minui-presenter \
+            --action-text "CONFIRM" \
+            --cancel-show \
+            --cancel-text "EXIT" \
+            --confirm-show \
+            --message "$message" \
+            --timeout 0
         exit_code=$?
         if [ "$exit_code" -ne 0 ]; then
             return 1
