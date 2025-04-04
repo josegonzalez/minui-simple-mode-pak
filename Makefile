@@ -1,10 +1,9 @@
-TAG ?= latest
 PAK_NAME := $(shell jq -r .label config.json)
 
 ARCHITECTURES := arm64
 PLATFORMS := rg35xxplus tg5040
 
-MINUI_PRESENTER_VERSION := 0.4.0
+MINUI_PRESENTER_VERSION := 0.7.0
 
 clean:
 	rm -f bin/*/minui-presenter || true
