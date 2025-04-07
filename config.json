@@ -2,6 +2,7 @@
     "label": "Simple Mode",
     "launch": "launch.sh",
     "description": "Manages MinUI's Simple Mode",
+    "pak_type": "tool",
     "platforms": [
         "rg35xxplus",
         "tg5040"
