@@ -24,7 +24,7 @@ main() {
         export PLATFORM="tg5040"
     fi
 
-    if [ -f "$SHARED_USERDATA_PATH/force-simple-mode" ]; then
+    if [ -f "$USERDATA_PATH/$PAK_NAME/force-simple-mode" ]; then
         return 0
     fi
 
